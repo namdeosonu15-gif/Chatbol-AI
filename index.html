@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raja AI</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#343541;
+  color:white;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+header{
+  padding:16px;
+  background:#202123;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+}
+
+#chat{
+  flex:1;
+  overflow-y:auto;
+  padding:15px;
+}
+
+.message{
+  max-width:85%;
+  padding:12px 15px;
+  margin:10px 0;
+  border-radius:12px;
+  line-height:1.5;
+}
+
+.user{
+  background:#19c37d;
+  margin-left:auto;
+}
+
+.bot{
+  background:#444654;
+  margin-right:auto;
+}
+
+.bottom{
+  display:flex;
+  padding:12px;
+  background:#202123;
+  gap:8px;
+}
+
+input{
+  flex:1;
+  padding:14px;
+  border:0;
+  border-radius:10px;
+  font-size:16px;
+  outline:none;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:0 18px;
+  background:#19c37d;
+  color:white;
+  font-size:18px;
+}
+
+button:active{
+  transform:scale(.95);
+}
+</style>
+</head>
+
+<body>
+
+<header>🤖 Raja AI</header>
+
+<div id="chat">
+  <div class="message bot">
+    नमस्ते! 👋 मैं Raja AI हूँ। मुझसे कुछ भी पूछो।
+  </div>
+</div>
+
+<div class="bottom">
+  <input
+    id="input"
+    type="text"
+    placeholder="अपना सवाल लिखो..."
+    onkeydown="if(event.key==='Enter') sendMessage()"
+  >
+
+  <button onclick="sendMessage()">➤</button>
+</div>
+
+<script>
+
+function sendMessage(){
+
+  const input = document.getElementById("input");
+  const text = input.value.trim();
+
+  if(text === "") return;
+
+  addMessage(text,"user");
+
+  input.value="";
+
+  setTimeout(function(){
+
+    let answer = getAnswer(text);
+
+    addMessage(answer,"bot");
+
+  },500);
+}
+
+
+function addMessage(text,type){
+
+  const chat = document.getElementById("chat");
+
+  const message = document.createElement("div");
+
+  message.className="message "+type;
+
+  message.innerText=text;
+
+  chat.appendChild(message);
+
+  chat.scrollTop=chat.scrollHeight;
+}
+
+
+function getAnswer(text){
+
+  let q=text.toLowerCase();
+
+  if(q.includes("hello") || q.includes("hi") || q.includes("नमस्ते")){
+    return "नमस्ते Raja ji! 😄 कैसे हो?";
+  }
+
+  if(q.includes("naam") || q.includes("नाम")){
+    return "मेरा नाम Raja AI है 🤖";
+  }
+
+  if(q.includes("kaise ho") || q.includes("कैसे हो")){
+    return "मैं बिल्कुल बढ़िया हूँ 😄 तुम बताओ!";
+  }
+
+  if(q.includes("game") || q.includes("गेम")){
+    return "मैं तुम्हें गेम बनाने में भी मदद कर सकता हूँ 🎮";
+  }
+
+  if(q.includes("github")){
+    return "GitHub पर HTML, CSS और JavaScript से chatbot website बनाई जा सकती है।";
+  }
+
+  return "अच्छा सवाल है! 😊 अभी मैं एक demo chatbot हूँ। असली AI जवाबों के लिए मुझे AI API से जोड़ना होगा।";
+}
+
+</script>
+
+</body>
+</html>
